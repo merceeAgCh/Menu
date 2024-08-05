@@ -32,8 +32,8 @@
             margin: 20px 0;
         }
         .platillo-temporada img {
-            max-width: 30%;
-            height: 30%;
+            max-width: 30%; /* Ajusta el ancho de la imagen */
+            height: auto;
             border-radius: 10px;
             margin: 10px 0;
         }
@@ -56,35 +56,43 @@
     </style>
 </head>
 <body>
-    <h1>Martes</h1>
-    <div class="menu-item">
-        <h2>Primer Tiempo:</h2>
-        <p>Consomé con verduras.</p>
-        <h2>Segundo Tiempo:</h2>
-        <p>Espaguetti.</p>
-        <h2>Tercer Tiempo:</h2>
-        <p>Carne de puerco en salsa verde con calabazas.</p>
-        <p>Precio: $80</p>
-    </div>
-    <h1>Miércoles</h1>
-    <div class="menu-item">
-        <h2>Primer Tiempo:</h2>
-        <p>Crema de Zanahoria.</p>
-        <h2>Segundo Tiempo:</h2>
-        <p>Arroz.</p>
-        <h2>Tercer Tiempo:</h2>
-        <p>Milanesa de res.</p>
-        <p>Precio: $80</p>
-    </div>
-    <h1>Platillo de temporada</h1>
-    <div class="menu-item platillo-temporada">
-        <h2>Chile en nogada</h2>
-        <p>Delicioso chile en nogada acompañado de arroz blanco</p>
-        <img src="./chile.jpeg" alt="Chile en nogada">
-        <p>Precio: $200</p>
-    </div>
-    <a href="https://wa.me/5510531834?text=Hola,%20quisiera%20hacer%20un%20pedido."  target="_blank" class="whatsapp-button">
+    <div id="menu"></div> <!-- Contenedor para el menú cargado -->
+    <a href="https://wa.me/5510531834?text=Hola,%20quisiera%20hacer%20un%20pedido." target="_blank" class="whatsapp-button">
         Enviar mensaje a WhatsApp
     </a>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $.getJSON('https://sheetdb.io/api/v1/88hrh4pi9tkim', function(data) {
+                console.log(data); // Para depurar
+                let menuHTML = '';
+                data.forEach(item => {
+                    menuHTML += `
+                        <h1>${item.Dia}</h1>
+                        <div class="menu-item">
+                            <h2>Primer Tiempo:</h2>
+                            <p>${item['Primer Tiempo']}</p>
+                            <h2>Segundo Tiempo:</h2>
+                            <p>${item['Segundo Tiempo']}</p>
+                            <h2>Tercer Tiempo:</h2>
+                            <p>${item['Tercer Tiempo']}</p>
+                            <p>Precio: ${item.Precio}</p>
+                        </div>
+                    `;
+                });
+                menuHTML += `
+                    <h1>Platillo de temporada</h1>
+                    <div class="menu-item platillo-temporada">
+                        <h2>${data[0]['Platillo de Temporada']}</h2>
+                        <p>${data[0].Descripción}</p>
+                        <img src="./chile.jpeg" alt="${data[0]['Platillo de Temporada']}">
+                        <p>Precio: ${data[0]['Precio Platillo']}</p>
+                    </div>
+                `;
+                $('#menu').html(menuHTML);
+            });
+        });
+    </script>
 </body>
 </html>
