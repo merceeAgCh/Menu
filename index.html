@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menú</title>
+    <title>Comida</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -64,6 +64,22 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
         $(document).ready(function() {
+            // Solicitar permiso de notificación
+            if (Notification.permission !== "granted" && Notification.permission !== "denied") {
+                Notification.requestPermission();
+            }
+
+            function mostrarNotificacion(mensaje) {
+                if (Notification.permission === "granted") {
+                    new Notification("Actualización del menú", {
+                        body: mensaje,
+                        //icon: "https://example.com/icon.png" // Cambia esto a la URL de tu icono
+                    });
+                } else {
+                    alert(mensaje);
+                }
+            }
+
             $.getJSON('https://sheetdb.io/api/v1/88hrh4pi9tkim', function(data) {
                 console.log(data); // Para depurar
                 let menuHTML = '';
@@ -91,6 +107,9 @@
                     </div>
                 `;
                 $('#menu').html(menuHTML);
+
+                // Mostrar notificación
+                mostrarNotificacion("El menú ha sido actualizado.");
             });
         });
     </script>
