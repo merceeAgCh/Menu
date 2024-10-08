@@ -83,8 +83,22 @@
             $.getJSON('https://sheetdb.io/api/v1/88hrh4pi9tkim', function(data) {
                 console.log(data); // Para depurar
                 let menuHTML = '';
+                let desayunoHTML = '<h1>Desayuno</h1>';
+                let comidaHTML = '<h1>Comida</h1>';
+
                 data.forEach(item => {
-                    menuHTML += `
+                    console.log(item); // Verificar cada item
+                    desayunoHTML += `
+                        <h1>${item.Dia}</h1>
+                        <div class="menu-item">
+                            <h2>Desayuno:</h2>
+                            <p>${item['Desayuno']}</p>
+                            <h2>Incluye:</h2>
+                            <p>${item['Incluye']}</p>
+                            <p>Precio: ${item['Precio']}</p>
+                        </div>
+                    `;
+                    comidaHTML += `
                         <h1>${item.Dia}</h1>
                         <div class="menu-item">
                             <h2>Primer Tiempo:</h2>
@@ -93,23 +107,18 @@
                             <p>${item['Segundo Tiempo']}</p>
                             <h2>Tercer Tiempo:</h2>
                             <p>${item['Tercer Tiempo']}</p>
-                            <p>Precio: ${item.Precio}</p>
+                            <p>Precio: ${item['Precio']}</p>
                         </div>
                     `;
                 });
-                menuHTML += `
-                    <h1>Desayuno</h1>
-                    <div class="menu-item platillo-temporada">
-                        <h2>${data[0]['Desayuno']}</h2>
-                        <p>${data[0].Descripción}</p>
-                        <h3>Precio: ${data[0]['Precio Platillo']}</h3>
-                        <h2>¡¡IMPORTANTE!! Haz tu pedido con un día de anticipación.</h2>
-                    </div>
-                `;
-                $('#menu').html(menuHTML);
+
+                // Agregar el HTML generado al DOM
+                document.getElementById('menu').innerHTML = desayunoHTML + comidaHTML;
 
                 // Mostrar notificación
                 mostrarNotificacion("El menú ha sido actualizado.");
+            }).fail(function() {
+                console.error("Error al cargar los datos del menú.");
             });
         });
     </script>
