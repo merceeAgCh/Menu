@@ -4,119 +4,193 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Comida</title>
+    <!-- Google Material Icons y fuentes de Material Design -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <style>
+        :root {
+            --primary-color: #0069ea; /* Color morado intenso de Material Design */
+            --secondary-color: #17b80e; /* Color secundario verde agua */
+            --text-color: #212121; /* Texto oscuro */
+            --background-color: #f5f5f5; /* Fondo gris claro */
+            --card-background-color: #ffffff; /* Fondo de las tarjetas blanco */
+            --elevation: 0 4px 6px rgba(0,0,0,0.1);
+            --elevation-hover: 0 8px 10px rgba(0,0,0,0.15);
+        }
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
             margin: 0;
             padding: 20px;
-            background-color: #323030; /* Gris como pizarrón */
-            color: #fff; /* Letras resaltantes */
         }
+
         h1 {
             text-align: center;
-            color: #FFD700; /* Color dorado para el título */
+            color: var(--primary-color);
+            margin-bottom: 30px;
+            font-size: 2.2em;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 1.8em;
+            color: var(--primary-color);
             margin-bottom: 20px;
+            font-weight: 500;
         }
+
+        .menu-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        @media (min-width: 768px) {
+            .menu-container {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
         .menu-item {
-            background: #FFA500; /* Naranja para las tarjetas */
-            margin: 10px 0;
-            padding: 15px;
+            background-color: var(--card-background-color);
             border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+            box-shadow: var(--elevation);
+            padding: 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transform: scale(1);
         }
+
+        .menu-item:hover {
+            transform: scale(1.05); /* Aumenta ligeramente el tamaño */
+            box-shadow: var(--elevation-hover);
+        }
+
         .menu-item h2 {
-            margin: 10px 0 5px;
+            color: var(--primary-color);
+            font-size: 1.5em;
+            margin-bottom: 10px;
         }
-        .platillo-temporada {
-            text-align: center;
-            margin: 20px 0;
+
+        .menu-item p {
+            color: #757575;
+            font-size: 1em;
+            margin-bottom: 5px;
         }
-        .platillo-temporada img {
-            max-width: 30%; /* Ajusta el ancho de la imagen */
-            height: auto;
-            border-radius: 10px;
-            margin: 10px 0;
-        }
-        .whatsapp-button {
-            display: block;
-            width: 220px;
-            margin: 30px auto;
-            padding: 12px;
-            text-align: center;
-            background-color: #25D366;
+
+        .fab {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            background-color: var(--secondary-color);
             color: white;
-            border-radius: 5px;
-            text-decoration: none;
-            font-weight: bold;
-            transition: background-color 0.3s;
+            border: none;
+            border-radius: 50%;
+            width: 56px;
+            height: 56px;
+            box-shadow: var(--elevation);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
         }
-        .whatsapp-button:hover {
-            background-color: #128C7E;
+
+        .fab:hover {
+            background-color: #0069ea;
+            box-shadow: var(--elevation-hover);
         }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: var(--primary-color);
+            color: white;
+            margin-top: 30px;
+            font-size: 0.9em;
+        }
+
+        .section {
+            padding: 20px;
+            margin-bottom: 40px;
+        }
+
+        .section-desayuno {
+            background-color: #86eebcf2; /* Azul claro */
+            border-radius: 8px;
+        }
+
+        .section-comida {
+            background-color: #efaff5; /* Rosa claro */
+            border-radius: 8px;
+        }
+
     </style>
 </head>
 <body>
-    <div id="menu"></div> <!-- Contenedor para el menú cargado -->
-    <a href="https://wa.me/5510531834?text=Hola,%20quisiera%20hacer%20un%20pedido." target="_blank" class="whatsapp-button">
-        Enviar mensaje a WhatsApp
-    </a>
+
+    <header>
+        <h1>El sazón de la negrita</h1>
+    </header>
+
+    <div class="menu-container">
+        <!-- Desayuno Section -->
+        <div class="section section-desayuno">
+            <h2 class="section-title">Desayuno</h2>
+            <div id="menu-desayuno"></div>
+        </div>
+
+        <!-- Comida Section -->
+        <div class="section section-comida">
+            <h2 class="section-title">Comida</h2>
+            <div id="menu-comida"></div>
+        </div>
+    </div>
+
+    <!-- Botón de acción flotante (FAB) para WhatsApp -->
+    <button class="fab" onclick="window.open('https://wa.me/5510531834?text=Hola,%20quisiera%20hacer%20un%20pedido.', '_blank')">
+        <span class="material-icons">chat</span>
+    </button>
+
+    <footer>
+        <h4>Realiza el pedido un día antes.</h4>
+        <p>Gracias por su preferencia</p>
+    </footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
         $(document).ready(function() {
-            // Solicitar permiso de notificación
-            if (Notification.permission !== "granted" && Notification.permission !== "denied") {
-                Notification.requestPermission();
-            }
-
-            function mostrarNotificacion(mensaje) {
-                if (Notification.permission === "granted") {
-                    new Notification("Actualización del menú", {
-                        body: mensaje,
-                        //icon: "https://example.com/icon.png" // Cambia esto a la URL de tu icono
-                    });
-                } else {
-                    alert(mensaje);
-                }
-            }
 
             $.getJSON('https://sheetdb.io/api/v1/88hrh4pi9tkim', function(data) {
-                console.log(data); // Para depurar
-                let menuHTML = '';
-                let desayunoHTML = '<h1>Desayuno</h1>';
-                let comidaHTML = '<h1>Comida</h1>';
+                let desayunoHTML = '';
+                let comidaHTML = '';
 
                 data.forEach(item => {
-                    console.log(item); // Verificar cada item
                     desayunoHTML += `
-                        <h1>${item.Dia}</h1>
                         <div class="menu-item">
-                            <h2>Desayuno:</h2>
+                            <h2>${item.Dia} - Desayuno</h2>
                             <p>${item['Desayuno']}</p>
-                            <h2>Incluye:</h2>
-                            <p>${item['Incluye']}</p>
+                            <p>Incluye: ${item['Incluye']}</p>
                             <p>Precio: ${item['Precio']}</p>
                         </div>
                     `;
+
                     comidaHTML += `
-                        <h1>${item.Dia}</h1>
                         <div class="menu-item">
-                            <h2>Primer Tiempo:</h2>
-                            <p>${item['Primer Tiempo']}</p>
-                            <h2>Segundo Tiempo:</h2>
-                            <p>${item['Segundo Tiempo']}</p>
-                            <h2>Tercer Tiempo:</h2>
-                            <p>${item['Tercer Tiempo']}</p>
-                            <p>Precio: ${item['Precio']}</p>
+                            <h2>${item.Dia} - Comida</h2>
+                            <p>Primer Tiempo: ${item['Primer Tiempo']}</p>
+                            <p>Segundo Tiempo: ${item['Segundo Tiempo']}</p>
+                            <p>Tercer Tiempo: ${item['Tercer Tiempo']}</p>
+                            <p>Precio: ${item['Precio Comida']}</p>
                         </div>
                     `;
                 });
 
-                // Agregar el HTML generado al DOM
-                document.getElementById('menu').innerHTML = desayunoHTML + comidaHTML;
-
-                // Mostrar notificación
-                mostrarNotificacion("El menú ha sido actualizado.");
+                // Agregar el HTML generado a las respectivas secciones
+                document.getElementById('menu-desayuno').innerHTML = desayunoHTML;
+                document.getElementById('menu-comida').innerHTML = comidaHTML;
             }).fail(function() {
                 console.error("Error al cargar los datos del menú.");
             });
